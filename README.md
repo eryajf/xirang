@@ -1,9 +1,16 @@
-# eryajfgo
+<h1 align="center">EyajfGo</h1>
 
+<div align="center">
+简单好用，不缠不扰，直接上手的go-web框架
+<p align="center">
 <img src="https://img.shields.io/github/go-mod/go-version/eryajf/eryajfgo" alt="Go version"/>
 <img src="https://img.shields.io/badge/Gin-1.6.3-brightgreen" alt="Gin version"/>
 <img src="https://img.shields.io/badge/Gorm-1.22.3-brightgreen" alt="Gorm version"/>
 <img src="https://img.shields.io/github/license/eryajf/eryajfgo" alt="License"/>
+</p>
+</div>
+
+
 
 ## 项目介绍
 
