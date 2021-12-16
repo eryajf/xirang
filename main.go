@@ -1,10 +1,10 @@
 package main
 
 import (
-	"eryajfgo/model"
-	"eryajfgo/public"
-	"eryajfgo/public/tools"
-	"eryajfgo/router"
+	"xirang/model"
+	"xirang/public"
+	"xirang/public/tools"
+	"xirang/router"
 
 	"github.com/spf13/viper"
 )

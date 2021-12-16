@@ -1,9 +1,9 @@
 package model
 
 import (
-	"eryajfgo/public"
 	"fmt"
 	"time"
+	"xirang/public"
 
 	"github.com/spf13/viper"
 	"gorm.io/gorm"

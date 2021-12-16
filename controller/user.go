@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"eryajfgo/model"
-	"eryajfgo/public/tools"
-	"eryajfgo/service"
 	"net/http"
 	"strconv"
+	"xirang/model"
+	"xirang/public/tools"
+	"xirang/service"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"

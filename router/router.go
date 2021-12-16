@@ -1,8 +1,8 @@
 package router
 
 import (
-	"eryajfgo/controller"
-	"eryajfgo/middleware"
+	"xirang/controller"
+	"xirang/middleware"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"

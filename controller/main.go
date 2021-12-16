@@ -2,10 +2,10 @@ package controller
 
 import (
 	"encoding/json"
-	"eryajfgo/model"
-	"eryajfgo/public/captcha"
-	"eryajfgo/public/tools"
 	"fmt"
+	"xirang/model"
+	"xirang/public/captcha"
+	"xirang/public/tools"
 
 	"github.com/gin-gonic/gin"
 	validator "gopkg.in/go-playground/validator.v8"

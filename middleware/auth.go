@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"eryajfgo/model"
-	"eryajfgo/public/tools"
+	"xirang/model"
+	"xirang/public/tools"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
