@@ -19,6 +19,8 @@
 
 ## 项目介绍
 
+[gitee地址](https://gitee.com/eryajf/xirang): https://gitee.com/eryajf/xirang
+
 `xirang` 是一个非常简单的 `gin+gorm` 框架的基础架构，你只需要修改简单的代码，即可开发出你想要的接口。
 
 只需要将`.env.example`改为`.env`，然后配置里边的数据库配置信息，即可开始开发。
