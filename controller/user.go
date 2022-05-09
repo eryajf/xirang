@@ -3,9 +3,10 @@ package controller
 import (
 	"net/http"
 	"strconv"
-	"xirang/model"
-	"xirang/public/tools"
-	"xirang/service"
+
+	"github.com/eryajf/xirang/model"
+	"github.com/eryajf/xirang/public/tools"
+	"github.com/eryajf/xirang/service"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"

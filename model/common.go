@@ -3,7 +3,8 @@ package model
 import (
 	"fmt"
 	"time"
-	"xirang/public"
+
+	"github.com/eryajf/xirang/public"
 
 	"github.com/spf13/viper"
 	"gorm.io/gorm"

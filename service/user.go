@@ -2,8 +2,9 @@ package service
 
 import (
 	"errors"
-	"xirang/model"
-	"xirang/public/tools"
+
+	"github.com/eryajf/xirang/model"
+	"github.com/eryajf/xirang/public/tools"
 
 	"gorm.io/gorm"
 )

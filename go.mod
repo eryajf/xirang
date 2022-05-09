@@ -1,4 +1,4 @@
-module xirang
+module github.com/eryajf/xirang
 
 go 1.16
 

@@ -3,9 +3,10 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
-	"xirang/model"
-	"xirang/public/captcha"
-	"xirang/public/tools"
+
+	"github.com/eryajf/xirang/model"
+	"github.com/eryajf/xirang/public/captcha"
+	"github.com/eryajf/xirang/public/tools"
 
 	"github.com/gin-gonic/gin"
 	validator "gopkg.in/go-playground/validator.v8"
