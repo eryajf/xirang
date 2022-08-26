@@ -37,6 +37,13 @@
 
 数据表会自动创建，也可以通过docs下的sql自行创建。
 
+## 👨‍💻 项目地址
+
+| 分类 |                        GitHub                        |                        Gitee                        |
+| :--: | :--------------------------------------------------: | :-------------------------------------------------: |
+| 后端 |  https://github.com/eryajf/xirang.git   |  https://gitee.com/eryajf-world/xirang.git   |
+| 前端 | https://github.com/eryajf/xirang-ui.git | https://gitee.com/eryajf-world/xirang-ui.git |
+
 ## 目录结构
 
 ```
