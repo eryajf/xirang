@@ -33,7 +33,7 @@ mysql:
   # 密码
   password: 123456
   # 数据库名
-  database: go_ldap_admin
+  database: xirang
   # 主机地址
   host: localhost
   # 端口
