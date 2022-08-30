@@ -63,7 +63,7 @@ xirang
 
 ## 👀 功能概览
 
-| ![登录页](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_233851.png) | ![首页](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_233946.png) |
+| ![登录页](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234917.png) | ![首页](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_233946.png) |
 | :----------------------------------------------------------: | ------------------------------------------------------------ |
 | ![用户管理](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234015.png) | ![分组管理](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234043.png) |
 | ![角色管理](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234122.png) | ![菜单管理](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234153.png) |
