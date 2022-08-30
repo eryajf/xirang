@@ -29,7 +29,7 @@
 >
 >我将项目命名为`xirang`，亦是希望在自己不间断地学习积累之中，项目也能够越发成长，并有其丰富的力量。
 
-## 项目介绍
+## 🥸 项目介绍
 
 `xirang` 是一个非常简单的 `gin+gorm` 框架的基础架构，你只需要修改简单的代码，即可开始上手编写你的接口。
 
@@ -44,7 +44,7 @@
 | 后端 |  https://github.com/eryajf/xirang.git   |  https://gitee.com/eryajf-world/xirang.git   |
 | 前端 | https://github.com/eryajf/xirang-ui.git | https://gitee.com/eryajf-world/xirang-ui.git |
 
-## 目录结构
+## 📖 目录结构
 
 ```
 xirang
@@ -61,7 +61,15 @@ xirang
 └── main.go---------------程序入口
 ```
 
-## 快速开始
+## 👀 功能概览
+
+| ![登录页](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_233851.png) | ![首页](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_233946.png) |
+| :----------------------------------------------------------: | ------------------------------------------------------------ |
+| ![用户管理](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234015.png) | ![分组管理](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234043.png) |
+| ![角色管理](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234122.png) | ![菜单管理](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234153.png) |
+| ![接口管理](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234218.png) | ![操作日志](https://cdn.staticaly.com/gh/eryajf/tu/main/img/image_20220830_234245.png) |
+
+## 🚀 快速开始
 
 xirang项目的基础依赖项只有MySQL，本地准备好这两个服务之后，就可以启动项目，进行调试。
 
