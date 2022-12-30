@@ -1,6 +1,6 @@
 module github.com/eryajf/xirang
 
-go 1.18
+go 1.17
 
 require (
 	github.com/appleboy/gin-jwt/v2 v2.6.4
