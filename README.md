@@ -5,7 +5,7 @@
 [![Auth](https://img.shields.io/badge/Auth-eryajf-ff69b4)](https://github.com/eryajf)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/eryajf/xirang)](https://github.com/eryajf/xirang)
 [![Gin Version](https://img.shields.io/badge/Gin-1.6.3-brightgreen)](https://github.com/eryajf/xirang)
-[![Gorm Version](https://img.shields.io/badge/Gorm-1.20.12-brightgreen)](https://github.com/eryajf/xirang)
+[![Gorm Version](https://img.shields.io/badge/Gorm-1.24.5-brightgreen)](https://github.com/eryajf/xirang)
 [![GitHub Issues](https://img.shields.io/github/issues/eryajf/xirang.svg)](https://github.com/eryajf/xirang/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/eryajf/xirang)](https://github.com/eryajf/xirang/pulls)
 [![GitHub Pull Requests](https://img.shields.io/github/stars/eryajf/xirang)](https://github.com/eryajf/xirang/stargazers)
@@ -71,7 +71,10 @@ xirang
 
 ## 🚀 快速开始
 
-xirang项目的基础依赖项只有MySQL，本地准备好这两个服务之后，就可以启动项目，进行调试。
+xirang项目的基础依赖项只有MySQL，本地准备好这个服务之后，就可以启动项目，进行调试。
+
+`注意：xirang还支持sqlite3，默认配置文件即指向sqlite3，你可以不准备任何依赖，直接运行项目。`
+
 
 ### 拉取代码
 
