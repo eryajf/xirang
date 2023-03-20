@@ -12,6 +12,6 @@ FROM centos:centos7
 RUN mkdir /app
 WORKDIR /app
 COPY --from=builder /app/ .
-RUN chmod +x wait xirang && yum -y install vim net-tools telnet wget curl && yum clean all
+RUN chmod +x wait xirang && yum -y install vim net-tools telnet wget curl sqlite && yum clean all
 
 CMD ./wait && ./xirang
