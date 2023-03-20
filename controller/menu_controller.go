@@ -17,6 +17,14 @@ func (m *MenuController) GetTree(c *gin.Context) {
 	})
 }
 
+// GetUserMenuTreeByUserId 获取用户菜单树
+func (m *MenuController) GetAccessTree(c *gin.Context) {
+	req := new(request.MenuGetAccessTreeReq)
+	Run(c, req, func() (interface{}, interface{}) {
+		return logic.Menu.GetAccessTree(c, req)
+	})
+}
+
 // Add 新建
 func (m *MenuController) Add(c *gin.Context) {
 	req := new(request.MenuAddReq)
