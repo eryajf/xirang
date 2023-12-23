@@ -56,6 +56,31 @@ func (s ApiService) Count() (int64, error) {
 	return count, err
 }
 
+// ListCount 获取数据总数
+func (s ApiService) ListCount(req *request.ApiListReq) (int64, error) {
+	var count int64
+	db := common.DB.Model(&model.Api{}).Order("created_at DESC")
+
+	method := strings.TrimSpace(req.Method)
+	if method != "" {
+		db = db.Where("method LIKE ?", fmt.Sprintf("%%%s%%", method))
+	}
+	path := strings.TrimSpace(req.Path)
+	if path != "" {
+		db = db.Where("path LIKE ?", fmt.Sprintf("%%%s%%", path))
+	}
+	category := strings.TrimSpace(req.Category)
+	if category != "" {
+		db = db.Where("category LIKE ?", fmt.Sprintf("%%%s%%", category))
+	}
+	creator := strings.TrimSpace(req.Creator)
+	if creator != "" {
+		db = db.Where("creator LIKE ?", fmt.Sprintf("%%%s%%", creator))
+	}
+	err := db.Count(&count).Error
+	return count, err
+}
+
 // Add 添加资源
 func (s ApiService) Add(api *model.Api) error {
 	return common.DB.Create(api).Error

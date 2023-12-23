@@ -32,7 +32,7 @@ func (l OperationLogLogic) List(c *gin.Context, req interface{}) (data interface
 	for _, log := range logs {
 		rets = append(rets, *log)
 	}
-	count, err := isql.OperationLog.Count()
+	count, err := isql.OperationLog.ListCount(r)
 	if err != nil {
 		return nil, tools.NewMySqlError(fmt.Errorf("获取接口总数失败"))
 	}
