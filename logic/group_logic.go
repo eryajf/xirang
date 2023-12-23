@@ -69,7 +69,7 @@ func (l GroupLogic) List(c *gin.Context, req interface{}) (data interface{}, rsp
 	for _, group := range groups {
 		rets = append(rets, *group)
 	}
-	count, err := isql.Group.Count()
+	count, err := isql.Group.ListCount(r)
 	if err != nil {
 		return nil, tools.NewMySqlError(fmt.Errorf("获取分组总数失败"))
 	}

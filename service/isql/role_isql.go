@@ -52,6 +52,27 @@ func (s RoleService) Count() (int64, error) {
 	return count, err
 }
 
+// ListCount 获取符合条件的资源总数
+func (s RoleService) ListCount(req *request.RoleListReq) (int64, error) {
+	var count int64
+	db := common.DB.Model(&model.Role{}).Order("created_at DESC")
+
+	name := strings.TrimSpace(req.Name)
+	if name != "" {
+		db = db.Where("name LIKE ?", fmt.Sprintf("%%%s%%", name))
+	}
+	keyword := strings.TrimSpace(req.Keyword)
+	if keyword != "" {
+		db = db.Where("keyword LIKE ?", fmt.Sprintf("%%%s%%", keyword))
+	}
+	status := req.Status
+	if status != 0 {
+		db = db.Where("status = ?", status)
+	}
+	err := db.Count(&count).Error
+	return count, err
+}
+
 // Add 创建资源
 func (s RoleService) Add(role *model.Role) error {
 	return common.DB.Create(role).Error

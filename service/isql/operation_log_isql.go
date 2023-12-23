@@ -16,8 +16,8 @@ import (
 
 type OperationLogService struct{}
 
-//var Logs []model.OperationLog //全局变量多个线程需要加锁，所以每个线程自己维护一个
-//处理OperationLogChan将日志记录到数据库
+// var Logs []model.OperationLog //全局变量多个线程需要加锁，所以每个线程自己维护一个
+// 处理OperationLogChan将日志记录到数据库
 func (s OperationLogService) SaveOperationLogChannel(olc <-chan *model.OperationLog) {
 	// 只会在线程开启的时候执行一次
 	Logs := make([]model.OperationLog, 0)
@@ -76,6 +76,29 @@ func (s OperationLogService) List(req *request.OperationLogListReq) ([]*model.Op
 // Count 获取数据总数
 func (s OperationLogService) Count() (count int64, err error) {
 	err = common.DB.Model(&model.OperationLog{}).Count(&count).Error
+	return count, err
+}
+
+// ListCount 获取符合条件的数据总数
+func (s OperationLogService) ListCount(req *request.OperationLogListReq) (count int64, err error) {
+	db := common.DB.Model(&model.OperationLog{}).Order("id DESC")
+	username := strings.TrimSpace(req.Username)
+	if username != "" {
+		db = db.Where("username LIKE ?", fmt.Sprintf("%%%s%%", username))
+	}
+	ip := strings.TrimSpace(req.Ip)
+	if ip != "" {
+		db = db.Where("ip LIKE ?", fmt.Sprintf("%%%s%%", ip))
+	}
+	path := strings.TrimSpace(req.Path)
+	if path != "" {
+		db = db.Where("path LIKE ?", fmt.Sprintf("%%%s%%", path))
+	}
+	status := req.Status
+	if status != 0 {
+		db = db.Where("status = ?", status)
+	}
+	err = db.Count(&count).Error
 	return count, err
 }
 

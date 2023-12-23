@@ -64,7 +64,7 @@ func (l ApiLogic) List(c *gin.Context, req interface{}) (data interface{}, rspEr
 	for _, api := range apis {
 		rets = append(rets, *api)
 	}
-	count, err := isql.Api.Count()
+	count, err := isql.Api.ListCount(r)
 	if err != nil {
 		return nil, tools.NewMySqlError(fmt.Errorf("获取接口总数失败"))
 	}

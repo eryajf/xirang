@@ -72,7 +72,7 @@ func (l RoleLogic) List(c *gin.Context, req interface{}) (data interface{}, rspE
 		return nil, tools.NewMySqlError(fmt.Errorf("获取菜单列表失败: %s", err.Error()))
 	}
 
-	count, err := isql.Role.Count()
+	count, err := isql.Role.ListCount(r)
 	if err != nil {
 		return nil, tools.NewMySqlError(fmt.Errorf("获取接口总数失败"))
 	}

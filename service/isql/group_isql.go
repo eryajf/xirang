@@ -108,6 +108,23 @@ func (s GroupService) Count() (int64, error) {
 	return count, err
 }
 
+// ListCount 获取附和条件的数据总数
+func (s GroupService) ListCount(req *request.GroupListReq) (int64, error) {
+	var count int64
+	db := common.DB.Model(&model.Group{}).Order("created_at DESC")
+
+	groupName := strings.TrimSpace(req.GroupName)
+	if groupName != "" {
+		db = db.Where("group_name LIKE ?", fmt.Sprintf("%%%s%%", groupName))
+	}
+	groupRemark := strings.TrimSpace(req.Remark)
+	if groupRemark != "" {
+		db = db.Where("remark LIKE ?", fmt.Sprintf("%%%s%%", groupRemark))
+	}
+	err := db.Count(&count).Error
+	return count, err
+}
+
 // Add 添加资源
 func (s GroupService) Add(data *model.Group) error {
 	return common.DB.Create(data).Error
