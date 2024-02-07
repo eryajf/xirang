@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/eryajf/xirang/config"
-	"github.com/eryajf/xirang/model"
+	"github.com/eryajf/xirang/model/system"
 	"github.com/eryajf/xirang/public/tools"
 
 	"github.com/thoas/go-funk"
@@ -19,8 +19,8 @@ func InitData() {
 	}
 
 	// 1.写入角色数据
-	newRoles := make([]*model.Role, 0)
-	roles := []*model.Role{
+	newRoles := make([]*system.Role, 0)
+	roles := []*system.Role{
 		{
 			Model:   gorm.Model{ID: 1},
 			Name:    "管理员",
@@ -65,7 +65,7 @@ func InitData() {
 	}
 
 	// 2写入菜单
-	newMenus := make([]model.Menu, 0)
+	newMenus := make([]system.Menu, 0)
 	var uint0 uint = 0
 	var uint1 uint = 1
 	var uint4 uint = 5
@@ -82,7 +82,7 @@ func InitData() {
 	exampleStr := "example"
 	logOperationStr := "/log/operation-log"
 	documentationStr := "documentation"
-	menus := []model.Menu{
+	menus := []system.Menu{
 		{
 			Model:     gorm.Model{ID: 1},
 			Name:      "UserManage",
@@ -210,8 +210,8 @@ func InitData() {
 	}
 
 	// 3.写入用户
-	newUsers := make([]*model.User, 0)
-	users := []*model.User{
+	newUsers := make([]*system.User, 0)
+	users := []*system.User{
 		{
 			Model:         gorm.Model{ID: 1},
 			Username:      "admin",
@@ -247,7 +247,7 @@ func InitData() {
 	}
 
 	// 4.写入api
-	apis := []model.Api{
+	apis := []system.Api{
 		{
 			Method:   "POST",
 			Path:     "/base/login",
@@ -531,8 +531,8 @@ func InitData() {
 	}
 
 	// 5. 将角色绑定给菜单
-	newApi := make([]model.Api, 0)
-	newRoleCasbin := make([]model.RoleCasbin, 0)
+	newApi := make([]system.Api, 0)
+	newRoleCasbin := make([]system.RoleCasbin, 0)
 	for i, api := range apis {
 		api.ID = uint(i + 1)
 		err := DB.First(&api, api.ID).Error
@@ -540,7 +540,7 @@ func InitData() {
 			newApi = append(newApi, api)
 
 			// 管理员拥有所有API权限
-			newRoleCasbin = append(newRoleCasbin, model.RoleCasbin{
+			newRoleCasbin = append(newRoleCasbin, system.RoleCasbin{
 				Keyword: roles[0].Keyword,
 				Path:    api.Path,
 				Method:  api.Method,
@@ -560,7 +560,7 @@ func InitData() {
 			}
 
 			if funk.ContainsString(basePaths, api.Path) {
-				newRoleCasbin = append(newRoleCasbin, model.RoleCasbin{
+				newRoleCasbin = append(newRoleCasbin, system.RoleCasbin{
 					Keyword: roles[1].Keyword,
 					Path:    api.Path,
 					Method:  api.Method,
@@ -589,8 +589,8 @@ func InitData() {
 	}
 
 	// 6.写入分组
-	newGroups := make([]model.Group, 0)
-	groups := []model.Group{
+	newGroups := make([]system.Group, 0)
+	groups := []system.Group{
 		{
 			Model:     gorm.Model{ID: 1},
 			GroupName: "root",

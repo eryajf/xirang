@@ -7,7 +7,7 @@ import (
 	"github.com/eryajf/xirang/config"
 	"github.com/eryajf/xirang/public/common"
 	"github.com/eryajf/xirang/public/tools"
-	"github.com/eryajf/xirang/service/isql"
+	"github.com/eryajf/xirang/service"
 )
 
 func InitConfig() {
@@ -30,12 +30,11 @@ func InitConfig() {
 func TestUserExist(t *testing.T) {
 	InitConfig()
 
-	var u isql.UserService
 	filter := tools.H{
 		"id": "111",
 	}
 
-	if u.Exist(filter) {
+	if service.ServiceGroupApp.SystemServiceGroup.UserService.Exist(filter) {
 		fmt.Println("用户名已存在")
 	} else {
 		fmt.Println("用户名不存在")

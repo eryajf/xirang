@@ -4,15 +4,15 @@ import (
 	"fmt"
 
 	"github.com/eryajf/xirang/config"
-	"github.com/eryajf/xirang/model"
 	"github.com/eryajf/xirang/public/common"
 	"github.com/eryajf/xirang/public/tools"
-	"github.com/eryajf/xirang/service/isql"
+	"github.com/eryajf/xirang/service"
 
 	"time"
 
-	"github.com/eryajf/xirang/model/request"
-	"github.com/eryajf/xirang/model/response"
+	"github.com/eryajf/xirang/model/system"
+	systemReq "github.com/eryajf/xirang/model/system/request"
+	systemRsp "github.com/eryajf/xirang/model/system/response"
 
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
@@ -43,7 +43,7 @@ func InitAuth() (*jwt.GinJWTMiddleware, error) {
 // 有效载荷处理
 func payloadFunc(data interface{}) jwt.MapClaims {
 	if v, ok := data.(tools.H); ok {
-		var user model.User
+		var user system.User
 		// 将用户json转为结构体
 		tools.JsonI2Struct(v["user"], &user)
 		return jwt.MapClaims{
@@ -66,7 +66,7 @@ func identityHandler(c *gin.Context) interface{} {
 
 // 校验token的正确性, 处理登录逻辑
 func login(c *gin.Context) (interface{}, error) {
-	var req request.RegisterAndLoginReq
+	var req systemReq.RegisterAndLoginReq
 	// 请求json绑定
 	if err := c.ShouldBind(&req); err != nil {
 		return "", err
@@ -78,13 +78,13 @@ func login(c *gin.Context) (interface{}, error) {
 		return nil, err
 	}
 
-	u := &model.User{
+	u := &system.User{
 		Username: req.Username,
 		Password: string(decodeData),
 	}
 
 	// 密码校验
-	user, err := isql.User.Login(u)
+	user, err := service.ServiceGroupApp.SystemServiceGroup.UserService.Login(u)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func login(c *gin.Context) (interface{}, error) {
 func authorizator(data interface{}, c *gin.Context) bool {
 	if v, ok := data.(tools.H); ok {
 		userStr := v["user"].(string)
-		var user model.User
+		var user system.User
 		// 将用户json转为结构体
 		tools.Json2Struct(userStr, &user)
 		// 将用户保存到context, api调用时取数据方便
@@ -111,12 +111,12 @@ func authorizator(data interface{}, c *gin.Context) bool {
 // 用户登录校验失败处理
 func unauthorized(c *gin.Context, code int, message string) {
 	common.Log.Debugf("JWT认证失败, 错误码: %d, 错误信息: %s", code, message)
-	response.Response(c, code, code, nil, fmt.Sprintf("JWT认证失败, 错误码: %d, 错误信息: %s", code, message))
+	systemRsp.Response(c, code, code, nil, fmt.Sprintf("JWT认证失败, 错误码: %d, 错误信息: %s", code, message))
 }
 
 // 登录成功后的响应
 func loginResponse(c *gin.Context, code int, token string, expires time.Time) {
-	response.Response(c, code, code,
+	systemRsp.Response(c, code, code,
 		gin.H{
 			"token":   token,
 			"expires": expires.Format("2006-01-02 15:04:05"),
@@ -126,12 +126,12 @@ func loginResponse(c *gin.Context, code int, token string, expires time.Time) {
 
 // 登出后的响应
 func logoutResponse(c *gin.Context, code int) {
-	response.Success(c, nil, "退出成功")
+	systemRsp.Success(c, nil, "退出成功")
 }
 
 // 刷新token后的响应
 func refreshResponse(c *gin.Context, code int, token string, expires time.Time) {
-	response.Response(c, code, code,
+	systemRsp.Response(c, code, code,
 		gin.H{
 			"token":   token,
 			"expires": expires,

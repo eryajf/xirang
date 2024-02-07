@@ -7,7 +7,7 @@ import (
 	"github.com/eryajf/xirang/config"
 	"github.com/eryajf/xirang/public/common"
 	"github.com/eryajf/xirang/public/tools"
-	"github.com/eryajf/xirang/service/isql"
+	"github.com/eryajf/xirang/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,7 +17,7 @@ var checkLock sync.Mutex
 // Casbin中间件, 基于RBAC的权限访问控制模型
 func CasbinMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		user, err := isql.User.GetCurrentLoginUser(c)
+		user, err := service.ServiceGroupApp.SystemServiceGroup.UserService.GetCurrentLoginUser(c)
 		if err != nil {
 			tools.Response(c, 401, 401, nil, "用户未登录")
 			c.Abort()
