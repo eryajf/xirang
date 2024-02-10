@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/eryajf/xirang/config"
+	"github.com/eryajf/xirang/model/example"
 	"github.com/eryajf/xirang/model/system"
 
 	"github.com/glebarez/sqlite"
@@ -34,6 +35,7 @@ func dbAutoMigrate() {
 		&system.Menu{},
 		&system.Api{},
 		&system.OperationLog{},
+		&example.CloudAccount{},
 	)
 }
 

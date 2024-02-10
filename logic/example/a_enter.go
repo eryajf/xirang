@@ -3,10 +3,10 @@ package example
 import "github.com/eryajf/xirang/service"
 
 type LogicGroup struct {
-	DomainLogic
+	CloudAccountLogic
 }
 
 // 初始化 service
 var (
-	DomainService = service.ServiceGroupApp.ExampleServiceGroup.DomainService
+	CloudAccountService = service.ServiceGroupApp.ExampleServiceGroup.CloudAccountService
 )

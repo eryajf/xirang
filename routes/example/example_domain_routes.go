@@ -7,17 +7,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type ExamleDomainRouter struct{}
+type CloudAccount struct{}
 
-func (s ExamleDomainRouter) InitExamleRoutes(r *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) gin.IRoutes {
-	domain := r.Group("/domain")
+func (s CloudAccount) InitExamleRoutes(r *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) gin.IRoutes {
+	cloudAccount := r.Group("/cloudaccount")
 	// 开启jwt认证中间件
-	domain.Use(authMiddleware.MiddlewareFunc())
+	cloudAccount.Use(authMiddleware.MiddlewareFunc())
 	// 开启casbin鉴权中间件
-	domain.Use(middleware.CasbinMiddleware())
+	cloudAccount.Use(middleware.CasbinMiddleware())
 
 	{
-		domain.GET("/list", DomainController.List) // 标签键列表
+		cloudAccount.POST("/add", CloudAccountController.Add)
+		cloudAccount.GET("/list", CloudAccountController.List)
+		cloudAccount.POST("/update", CloudAccountController.Update)
+		cloudAccount.POST("/delete", CloudAccountController.Delete)
 	}
 
 	return r

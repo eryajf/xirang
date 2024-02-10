@@ -55,7 +55,7 @@ func InitRoutes() *gin.Engine {
 	apiGroup := r.Group("/" + config.Conf.System.UrlPathPrefix)
 
 	// 路由分组
-	systemApiGroup := apiGroup.Group("/system/v1")
+	systemApiGroup := apiGroup.Group("/system")
 
 	// 注册路由
 	RouterGroupApp.System.InitBaseRoutes(systemApiGroup, authMiddleware)         // 注册基础路由, 不需要jwt认证中间件,不需要casbin中间件
@@ -67,7 +67,7 @@ func InitRoutes() *gin.Engine {
 	RouterGroupApp.System.InitOperationLogRoutes(systemApiGroup, authMiddleware) // 注册操作日志路由, jwt认证中间件,casbin鉴权中间件
 
 	// 路由分组
-	cmdbApiGroup := apiGroup.Group("/example/v1")
+	cmdbApiGroup := apiGroup.Group("/example")
 	RouterGroupApp.Example.InitExamleRoutes(cmdbApiGroup, authMiddleware)
 
 	common.Log.Info("初始化路由完成！")
