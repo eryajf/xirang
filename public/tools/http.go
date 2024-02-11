@@ -15,6 +15,8 @@ const (
 	ValidatorErr = 412
 )
 
+var ReqAssertErr = NewRspError(SystemErr, fmt.Errorf("请求异常"))
+
 type RspError struct {
 	code int
 	err  error

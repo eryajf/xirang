@@ -12,7 +12,7 @@ import (
 	"github.com/eryajf/xirang/middleware"
 	"github.com/eryajf/xirang/public/common"
 	"github.com/eryajf/xirang/routes"
-	"github.com/eryajf/xirang/service/isql"
+	"github.com/eryajf/xirang/service"
 )
 
 func main() {
@@ -38,7 +38,7 @@ func main() {
 	// 操作日志中间件处理日志时没有将日志发送到rabbitmq或者kafka中, 而是发送到了channel中
 	// 这里开启3个goroutine处理channel将日志记录到数据库
 	for i := 0; i < 3; i++ {
-		go isql.OperationLog.SaveOperationLogChannel(middleware.OperationLogChan)
+		go service.ServiceGroupApp.SystemServiceGroup.OperationLogService.SaveOperationLogChannel(middleware.OperationLogChan)
 	}
 
 	// 注册所有路由

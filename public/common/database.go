@@ -4,7 +4,8 @@ import (
 	"fmt"
 
 	"github.com/eryajf/xirang/config"
-	"github.com/eryajf/xirang/model"
+	"github.com/eryajf/xirang/model/example"
+	"github.com/eryajf/xirang/model/system"
 
 	"github.com/glebarez/sqlite"
 	"gorm.io/driver/mysql"
@@ -28,12 +29,13 @@ func InitDB() {
 // 自动迁移表结构
 func dbAutoMigrate() {
 	_ = DB.AutoMigrate(
-		&model.User{},
-		&model.Role{},
-		&model.Group{},
-		&model.Menu{},
-		&model.Api{},
-		&model.OperationLog{},
+		&system.User{},
+		&system.Role{},
+		&system.Group{},
+		&system.Menu{},
+		&system.Api{},
+		&system.OperationLog{},
+		&example.CloudAccount{},
 	)
 }
 

@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/eryajf/xirang/config"
-	"github.com/eryajf/xirang/model"
+	"github.com/eryajf/xirang/model/system"
 	"github.com/eryajf/xirang/public/tools"
 
 	"github.com/thoas/go-funk"
@@ -19,8 +19,8 @@ func InitData() {
 	}
 
 	// 1.写入角色数据
-	newRoles := make([]*model.Role, 0)
-	roles := []*model.Role{
+	newRoles := make([]*system.Role, 0)
+	roles := []*system.Role{
 		{
 			Model:   gorm.Model{ID: 1},
 			Name:    "管理员",
@@ -65,33 +65,21 @@ func InitData() {
 	}
 
 	// 2写入菜单
-	newMenus := make([]model.Menu, 0)
+	newMenus := make([]system.Menu, 0)
 	var uint0 uint = 0
 	var uint1 uint = 1
-	var uint4 uint = 5
-	var uint8 uint = 9
-	componentStr := "component"
-	systemRoleStr := "/system/role"
-	personnelManageStr := "/personnel/user"
-	userStr := "user"
-	peopleStr := "people"
-	groupStr := "peoples"
-	roleStr := "eye-open"
-	treeTableStr := "tree-table"
-	treeStr := "tree"
-	exampleStr := "example"
-	logOperationStr := "/log/operation-log"
-	documentationStr := "documentation"
-	menus := []model.Menu{
+	var uint7 uint = 7
+	var uint9 uint = 9
+	menus := []system.Menu{
 		{
 			Model:     gorm.Model{ID: 1},
-			Name:      "UserManage",
-			Title:     "人员管理",
-			Icon:      userStr,
-			Path:      "/personnel",
+			Name:      "System",
+			Title:     "系统管理",
+			Icon:      "system",
+			Path:      "/system",
 			Component: "Layout",
-			Redirect:  personnelManageStr,
-			Sort:      5,
+			Redirect:  "/system/user",
+			Sort:      1,
 			ParentId:  uint0,
 			Roles:     roles[:1],
 			Creator:   "系统",
@@ -100,10 +88,10 @@ func InitData() {
 			Model:     gorm.Model{ID: 2},
 			Name:      "User",
 			Title:     "用户管理",
-			Icon:      peopleStr,
+			Icon:      "user",
 			Path:      "user",
-			Component: "/personnel/user/index",
-			Sort:      6,
+			Component: "/system/user/index",
+			Sort:      3,
 			ParentId:  uint1,
 			Roles:     roles[:1],
 			Creator:   "系统",
@@ -112,86 +100,97 @@ func InitData() {
 			Model:     gorm.Model{ID: 3},
 			Name:      "Group",
 			Title:     "分组管理",
-			Icon:      groupStr,
+			Icon:      "peoples",
 			Path:      "group",
-			Component: "/personnel/group/index",
-			Sort:      7,
+			Component: "/system/group/index",
+			Sort:      3,
 			ParentId:  uint1,
 			NoCache:   1,
 			Roles:     roles[:1],
 			Creator:   "系统",
 		},
 		{
+			Model:     gorm.Model{ID: 4},
+			Name:      "Role",
+			Title:     "角色管理",
+			Icon:      "eye-open",
+			Path:      "role",
+			Component: "/system/role/index",
+			Sort:      10,
+			ParentId:  uint1,
+			Roles:     roles[:1],
+			Creator:   "系统",
+		},
+		{
 			Model:     gorm.Model{ID: 5},
-			Name:      "System",
-			Title:     "系统管理",
-			Icon:      componentStr,
-			Path:      "/system",
-			Component: "Layout",
-			Redirect:  systemRoleStr,
-			Sort:      9,
-			ParentId:  uint0,
+			Name:      "Menu",
+			Title:     "菜单管理",
+			Icon:      "tree-table",
+			Path:      "menu",
+			Component: "/system/menu/index",
+			Sort:      13,
+			ParentId:  uint1,
 			Roles:     roles[:1],
 			Creator:   "系统",
 		},
 		{
 			Model:     gorm.Model{ID: 6},
-			Name:      "Role",
-			Title:     "角色管理",
-			Icon:      roleStr,
-			Path:      "role",
-			Component: "/system/role/index",
-			Sort:      10,
-			ParentId:  uint4,
+			Name:      "Api",
+			Title:     "接口管理",
+			Icon:      "tree",
+			Path:      "api",
+			Component: "/system/api/index",
+			Sort:      14,
+			ParentId:  uint1,
 			Roles:     roles[:1],
 			Creator:   "系统",
 		},
 		{
 			Model:     gorm.Model{ID: 7},
-			Name:      "Menu",
-			Title:     "菜单管理",
-			Icon:      treeTableStr,
-			Path:      "menu",
-			Component: "/system/menu/index",
-			Sort:      13,
-			ParentId:  uint4,
-			Roles:     roles[:1],
+			Name:      "Log",
+			Title:     "日志管理",
+			Icon:      "log",
+			Path:      "/log",
+			Component: "Layout",
+			Redirect:  "/log/operationLog",
+			Sort:      20,
+			ParentId:  uint1,
+			Roles:     roles[:2],
 			Creator:   "系统",
 		},
 		{
 			Model:     gorm.Model{ID: 8},
-			Name:      "Api",
-			Title:     "接口管理",
-			Icon:      treeStr,
-			Path:      "api",
-			Component: "/system/api/index",
-			Sort:      14,
-			ParentId:  uint4,
-			Roles:     roles[:1],
+			Name:      "OperationLog",
+			Title:     "操作日志",
+			Icon:      "documentation",
+			Path:      "operationLog",
+			Component: "/system/operationLog/index",
+			Sort:      21,
+			ParentId:  uint7,
+			Roles:     roles[:2],
 			Creator:   "系统",
 		},
 		{
 			Model:     gorm.Model{ID: 9},
-			Name:      "Log",
-			Title:     "日志管理",
-			Icon:      exampleStr,
-			Path:      "/log",
+			Name:      "Example",
+			Title:     "示例模块",
+			Icon:      "example",
+			Path:      "/example",
 			Component: "Layout",
-			Redirect:  logOperationStr,
-			Sort:      20,
+			Sort:      22,
 			ParentId:  uint0,
 			Roles:     roles[:2],
 			Creator:   "系统",
 		},
 		{
 			Model:     gorm.Model{ID: 10},
-			Name:      "OperationLog",
-			Title:     "操作日志",
-			Icon:      documentationStr,
-			Path:      "operation-log",
-			Component: "/log/operation-log/index",
-			Sort:      21,
-			ParentId:  uint8,
+			Name:      "CloudAccount",
+			Title:     "云账户",
+			Icon:      "peoples",
+			Path:      "CloudAccount",
+			Component: "/example/cloudAccount/index",
+			Sort:      23,
+			ParentId:  uint9,
 			Roles:     roles[:2],
 			Creator:   "系统",
 		},
@@ -210,8 +209,8 @@ func InitData() {
 	}
 
 	// 3.写入用户
-	newUsers := make([]*model.User, 0)
-	users := []*model.User{
+	newUsers := make([]*system.User, 0)
+	users := []*system.User{
 		{
 			Model:         gorm.Model{ID: 1},
 			Username:      "admin",
@@ -247,292 +246,320 @@ func InitData() {
 	}
 
 	// 4.写入api
-	apis := []model.Api{
+	apis := []system.Api{
 		{
 			Method:   "POST",
-			Path:     "/base/login",
+			Path:     "/system/base/login",
 			Category: "base",
 			Remark:   "用户登录",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/base/logout",
+			Path:     "/system/base/logout",
 			Category: "base",
 			Remark:   "用户登出",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/base/refreshToken",
+			Path:     "/system/base/refreshToken",
 			Category: "base",
 			Remark:   "刷新JWT令牌",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/user/info",
+			Path:     "/system/user/info",
 			Category: "user",
 			Remark:   "获取当前登录用户信息",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/user/list",
+			Path:     "/system/user/list",
 			Category: "user",
 			Remark:   "获取用户列表",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/user/changePwd",
+			Path:     "/system/user/changePwd",
 			Category: "user",
 			Remark:   "更新用户登录密码",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/user/add",
+			Path:     "/system/user/add",
 			Category: "user",
 			Remark:   "创建用户",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/user/update",
+			Path:     "/system/user/update",
 			Category: "user",
 			Remark:   "更新用户",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/user/delete",
+			Path:     "/system/user/delete",
 			Category: "user",
 			Remark:   "批量删除用户",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/user/changeUserStatus",
+			Path:     "/system/user/changeUserStatus",
 			Category: "user",
 			Remark:   "更改用户状态",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/group/list",
+			Path:     "/system/group/list",
 			Category: "group",
 			Remark:   "获取分组列表",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/group/tree",
+			Path:     "/system/group/tree",
 			Category: "group",
 			Remark:   "获取分组列表树",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/group/add",
+			Path:     "/system/group/add",
 			Category: "group",
 			Remark:   "创建分组",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/group/update",
+			Path:     "/system/group/update",
 			Category: "group",
 			Remark:   "更新分组",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/group/delete",
+			Path:     "/system/group/delete",
 			Category: "group",
 			Remark:   "批量删除分组",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/group/adduser",
+			Path:     "/system/group/adduser",
 			Category: "group",
 			Remark:   "添加用户到分组",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/group/removeuser",
+			Path:     "/system/group/removeuser",
 			Category: "group",
 			Remark:   "将用户从分组移出",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/group/useringroup",
+			Path:     "/system/group/useringroup",
 			Category: "group",
 			Remark:   "获取在分组内的用户列表",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/group/usernoingroup",
+			Path:     "/system/group/usernoingroup",
 			Category: "group",
 			Remark:   "获取不在分组内的用户列表",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/role/list",
+			Path:     "/system/role/list",
 			Category: "role",
 			Remark:   "获取角色列表",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/role/add",
+			Path:     "/system/role/add",
 			Category: "role",
 			Remark:   "创建角色",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/role/update",
+			Path:     "/system/role/update",
 			Category: "role",
 			Remark:   "更新角色",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/role/getmenulist",
+			Path:     "/system/role/getmenulist",
 			Category: "role",
 			Remark:   "获取角色的权限菜单",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/role/updatemenus",
+			Path:     "/system/role/updatemenus",
 			Category: "role",
 			Remark:   "更新角色的权限菜单",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/role/getapilist",
+			Path:     "/system/role/getapilist",
 			Category: "role",
 			Remark:   "获取角色的权限接口",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/role/updateapis",
+			Path:     "/system/role/updateapis",
 			Category: "role",
 			Remark:   "更新角色的权限接口",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/role/delete",
+			Path:     "/system/role/delete",
 			Category: "role",
 			Remark:   "批量删除角色",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/menu/list",
+			Path:     "/system/menu/list",
 			Category: "menu",
 			Remark:   "获取菜单列表",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/menu/tree",
+			Path:     "/system/menu/tree",
 			Category: "menu",
 			Remark:   "获取菜单树",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/menu/access/tree",
+			Path:     "/system/menu/access/tree",
 			Category: "menu",
 			Remark:   "获取用户菜单树",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/menu/add",
+			Path:     "/system/menu/add",
 			Category: "menu",
 			Remark:   "创建菜单",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/menu/update",
+			Path:     "/system/menu/update",
 			Category: "menu",
 			Remark:   "更新菜单",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/menu/delete",
+			Path:     "/system/menu/delete",
 			Category: "menu",
 			Remark:   "批量删除菜单",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/api/list",
+			Path:     "/system/api/list",
 			Category: "api",
 			Remark:   "获取接口列表",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/api/tree",
+			Path:     "/system/api/tree",
 			Category: "api",
 			Remark:   "获取接口树",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/api/add",
+			Path:     "/system/api/add",
 			Category: "api",
 			Remark:   "创建接口",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/api/update",
+			Path:     "/system/api/update",
 			Category: "api",
 			Remark:   "更新接口",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/api/delete",
+			Path:     "/system/api/delete",
 			Category: "api",
 			Remark:   "批量删除接口",
 			Creator:  "系统",
 		},
 		{
 			Method:   "GET",
-			Path:     "/log/operation/list",
+			Path:     "/system/log/operation/list",
 			Category: "log",
 			Remark:   "获取操作日志列表",
 			Creator:  "系统",
 		},
 		{
 			Method:   "POST",
-			Path:     "/log/operation/delete",
+			Path:     "/system/log/operation/delete",
 			Category: "log",
 			Remark:   "批量删除操作日志",
+			Creator:  "系统",
+		},
+		{
+			Method:   "GET",
+			Path:     "/example/cloudaccount/list",
+			Category: "cloudAccount",
+			Remark:   "获取云账户列表",
+			Creator:  "系统",
+		},
+		{
+			Method:   "POST",
+			Path:     "/example/cloudaccount/add",
+			Category: "cloudAccount",
+			Remark:   "添加云账户",
+			Creator:  "系统",
+		},
+		{
+			Method:   "POST",
+			Path:     "/example/cloudaccount/update",
+			Category: "cloudAccount",
+			Remark:   "更新云账户信息",
+			Creator:  "系统",
+		},
+		{
+			Method:   "POST",
+			Path:     "/example/cloudaccount/delete",
+			Category: "cloudAccount",
+			Remark:   "批量删除云账户",
 			Creator:  "系统",
 		},
 	}
 
 	// 5. 将角色绑定给菜单
-	newApi := make([]model.Api, 0)
-	newRoleCasbin := make([]model.RoleCasbin, 0)
+	newApi := make([]system.Api, 0)
+	newRoleCasbin := make([]system.RoleCasbin, 0)
 	for i, api := range apis {
 		api.ID = uint(i + 1)
 		err := DB.First(&api, api.ID).Error
@@ -540,7 +567,7 @@ func InitData() {
 			newApi = append(newApi, api)
 
 			// 管理员拥有所有API权限
-			newRoleCasbin = append(newRoleCasbin, model.RoleCasbin{
+			newRoleCasbin = append(newRoleCasbin, system.RoleCasbin{
 				Keyword: roles[0].Keyword,
 				Path:    api.Path,
 				Method:  api.Method,
@@ -548,19 +575,19 @@ func InitData() {
 
 			// 非管理员拥有基础权限
 			basePaths := []string{
-				"/base/login",
-				"/base/logout",
-				"/base/refreshToken",
-				"/base/changePwd",
-				"/base/dashboard",
-				"/user/info",
-				"/user/changePwd",
-				"/menu/access/tree",
-				"/log/operation/list",
+				"/system/base/login",
+				"/system/base/logout",
+				"/system/base/refreshToken",
+				"/system/base/changePwd",
+				"/system/base/dashboard",
+				"/system/user/info",
+				"/system/user/changePwd",
+				"/system/menu/access/tree",
+				"/system/log/operation/list",
 			}
 
 			if funk.ContainsString(basePaths, api.Path) {
-				newRoleCasbin = append(newRoleCasbin, model.RoleCasbin{
+				newRoleCasbin = append(newRoleCasbin, system.RoleCasbin{
 					Keyword: roles[1].Keyword,
 					Path:    api.Path,
 					Method:  api.Method,
@@ -589,8 +616,8 @@ func InitData() {
 	}
 
 	// 6.写入分组
-	newGroups := make([]model.Group, 0)
-	groups := []model.Group{
+	newGroups := make([]system.Group, 0)
+	groups := []system.Group{
 		{
 			Model:     gorm.Model{ID: 1},
 			GroupName: "root",

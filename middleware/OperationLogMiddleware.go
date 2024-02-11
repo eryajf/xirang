@@ -6,15 +6,15 @@ import (
 	"time"
 
 	"github.com/eryajf/xirang/config"
-	"github.com/eryajf/xirang/model"
+	"github.com/eryajf/xirang/model/system"
 	"github.com/eryajf/xirang/public/tools"
-	"github.com/eryajf/xirang/service/isql"
+	"github.com/eryajf/xirang/service"
 
 	"github.com/gin-gonic/gin"
 )
 
 // 操作日志channel
-var OperationLogChan = make(chan *model.OperationLog, 30)
+var OperationLogChan = make(chan *system.OperationLog, 30)
 
 func OperationLogMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -33,7 +33,7 @@ func OperationLogMiddleware() gin.HandlerFunc {
 		// 获取当前登录用户
 		var username string
 		ctxUser, _ := c.Get("user")
-		user, ok := ctxUser.(model.User)
+		user, ok := ctxUser.(system.User)
 		if !ok {
 			username = "未登录"
 		} else {
@@ -46,10 +46,10 @@ func OperationLogMiddleware() gin.HandlerFunc {
 		method := c.Request.Method
 
 		// 获取接口描述
-		api := new(model.Api)
-		_ = isql.Api.Find(tools.H{"path": path, "method": method}, api)
+		api := new(system.Api)
+		_ = service.ServiceGroupApp.SystemServiceGroup.ApiService.Find(tools.H{"path": path, "method": method}, api)
 
-		operationLog := model.OperationLog{
+		operationLog := system.OperationLog{
 			Username:   username,
 			Ip:         c.ClientIP(),
 			IpLocation: "",
