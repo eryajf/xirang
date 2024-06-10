@@ -72,15 +72,9 @@ func login(c *gin.Context) (interface{}, error) {
 		return "", err
 	}
 
-	// 密码通过RSA解密
-	decodeData, err := tools.RSADecrypt([]byte(req.Password), config.Conf.System.RSAPrivateBytes)
-	if err != nil {
-		return nil, err
-	}
-
 	u := &system.User{
 		Username: req.Username,
-		Password: string(decodeData),
+		Password: req.Password,
 	}
 
 	// 密码校验
@@ -111,27 +105,31 @@ func authorizator(data interface{}, c *gin.Context) bool {
 // 用户登录校验失败处理
 func unauthorized(c *gin.Context, code int, message string) {
 	common.Log.Debugf("JWT认证失败, 错误码: %d, 错误信息: %s", code, message)
-	systemRsp.Response(c, code, code, nil, fmt.Sprintf("JWT认证失败, 错误码: %d, 错误信息: %s", code, message))
+	tools.Response(c, code, code, nil, fmt.Sprintf("JWT认证失败, 错误码: %d, 错误信息: %s", code, message))
+
 }
 
 // 登录成功后的响应
 func loginResponse(c *gin.Context, code int, token string, expires time.Time) {
-	systemRsp.Response(c, code, code,
-		gin.H{
-			"token":   token,
-			"expires": expires.Format("2006-01-02 15:04:05"),
-		},
-		"登录成功")
+	data := systemRsp.UserLoginRsp{
+		AccessToken: token,
+		// TODO: 暂时写死，随后需要处理，另外还需要返回刷新token的token
+		Username: "eryajf",
+		Nickname: "二丫讲梵",
+		Expires:  expires.Format("2006/01/02 15:04:05"),
+		Roles:    []string{"admin"},
+	}
+	tools.Success(c, data)
 }
 
 // 登出后的响应
 func logoutResponse(c *gin.Context, code int) {
-	systemRsp.Success(c, nil, "退出成功")
+	tools.Response(c, code, code, nil, "退出成功")
 }
 
 // 刷新token后的响应
 func refreshResponse(c *gin.Context, code int, token string, expires time.Time) {
-	systemRsp.Response(c, code, code,
+	tools.Response(c, code, code,
 		gin.H{
 			"token":   token,
 			"expires": expires,

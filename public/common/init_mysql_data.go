@@ -214,7 +214,7 @@ func InitData() {
 		{
 			Model:         gorm.Model{ID: 1},
 			Username:      "admin",
-			Password:      tools.NewGenPasswd("123456"),
+			Password:      tools.NewGenPasswd("admin123456"),
 			Nickname:      "管理员",
 			GivenName:     "最强后台",
 			Mail:          "admin@eryajf.net",
