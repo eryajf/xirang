@@ -8,7 +8,7 @@ import (
 type LogicGroup struct {
 	ApiLogic
 	BaseLogic
-	GroupLogic
+	DeptLogic
 	MenuLogic
 	OperationLogLogic
 	RoleLogic
@@ -18,7 +18,7 @@ type LogicGroup struct {
 // 初始化 service
 var (
 	apiService          = service.ServiceGroupApp.SystemServiceGroup.ApiService
-	groupService        = service.ServiceGroupApp.SystemServiceGroup.GroupService
+	deptService         = service.ServiceGroupApp.SystemServiceGroup.DeptService
 	menuService         = service.ServiceGroupApp.SystemServiceGroup.MenuService
 	operationLogService = service.ServiceGroupApp.SystemServiceGroup.OperationLogService
 	roleService         = service.ServiceGroupApp.SystemServiceGroup.RoleService
@@ -40,15 +40,15 @@ func genMenuTree(parentId uint, menus []*system.Menu) []*system.Menu {
 }
 
 // genGroupTree 生成分组树
-func genGroupTree(parentId uint, groups []*system.Group) []*system.Group {
-	tree := make([]*system.Group, 0)
+func genGroupTree(parentId uint, groups []*system.Dept) []*system.Dept {
+	tree := make([]*system.Dept, 0)
 
-	for _, g := range groups {
-		if g.ParentId == parentId {
-			children := genGroupTree(g.ID, groups)
-			g.Children = children
-			tree = append(tree, g)
-		}
-	}
+	// for _, g := range groups {
+	// 	if g.ParentId == parentId {
+	// 		children := genGroupTree(g.ID, groups)
+	// 		g.Children = children
+	// 		tree = append(tree, g)
+	// 	}
+	// }
 	return tree
 }

@@ -1,9 +1,12 @@
 module github.com/eryajf/xirang
 
-go 1.18
+go 1.22
+
+toolchain go1.22.4
 
 require (
 	github.com/appleboy/gin-jwt/v2 v2.6.4
+	github.com/brianvoe/gofakeit/v7 v7.0.3
 	github.com/casbin/casbin/v2 v2.22.0
 	github.com/casbin/gorm-adapter/v3 v3.1.0
 	github.com/fsnotify/fsnotify v1.5.4

@@ -112,7 +112,8 @@ func unauthorized(c *gin.Context, code int, message string) {
 // 登录成功后的响应
 func loginResponse(c *gin.Context, code int, token string, expires time.Time) {
 	data := systemRsp.UserLoginRsp{
-		AccessToken: token,
+		AccessToken:  token,
+		RefreshToken: token,
 		// TODO: 暂时写死，随后需要处理，另外还需要返回刷新token的token
 		Username: "eryajf",
 		Nickname: "二丫讲梵",
@@ -129,10 +130,9 @@ func logoutResponse(c *gin.Context, code int) {
 
 // 刷新token后的响应
 func refreshResponse(c *gin.Context, code int, token string, expires time.Time) {
-	tools.Response(c, code, code,
-		gin.H{
-			"token":   token,
-			"expires": expires,
-		},
-		"刷新token成功")
+	tools.Success(c, systemRsp.UserRefreshTokenRsp{
+		AccessToken:  token,
+		RefreshToken: token,
+		Expires:      expires.Format("2006/01/02 15:04:05"),
+	})
 }

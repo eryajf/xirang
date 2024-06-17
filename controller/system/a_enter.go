@@ -4,7 +4,7 @@ import "github.com/eryajf/xirang/logic"
 
 type ControllerGroup struct {
 	ApiController
-	GroupController
+	DeptController
 	MenuController
 	RoleController
 	UserController
@@ -15,7 +15,7 @@ type ControllerGroup struct {
 var (
 	ApiLogic          = logic.LogicGroupApp.SystemLogicGroup.ApiLogic
 	BaseLogic         = logic.LogicGroupApp.SystemLogicGroup.BaseLogic
-	GroupLogic        = logic.LogicGroupApp.SystemLogicGroup.GroupLogic
+	DeptLogic         = logic.LogicGroupApp.SystemLogicGroup.DeptLogic
 	MenuLogic         = logic.LogicGroupApp.SystemLogicGroup.MenuLogic
 	OperationLogLogic = logic.LogicGroupApp.SystemLogicGroup.OperationLogLogic
 	RoleLogic         = logic.LogicGroupApp.SystemLogicGroup.RoleLogic

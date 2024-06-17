@@ -5,7 +5,7 @@ import "github.com/eryajf/xirang/controller"
 type RouterGroup struct {
 	ApiRouter
 	BaseRouter
-	GroupRouter
+	DeptRouter
 	MenuRouter
 	OperationLogRouter
 	RoleRouter
@@ -15,7 +15,7 @@ type RouterGroup struct {
 var (
 	ApiController          = controller.ControllerGroupApp.SystemControllerGroup.ApiController
 	BaseController         = controller.ControllerGroupApp.SystemControllerGroup.BaseController
-	GroupController        = controller.ControllerGroupApp.SystemControllerGroup.GroupController
+	DeptController         = controller.ControllerGroupApp.SystemControllerGroup.DeptController
 	MenuController         = controller.ControllerGroupApp.SystemControllerGroup.MenuController
 	OperationLogController = controller.ControllerGroupApp.SystemControllerGroup.OperationLogController
 	RoleController         = controller.ControllerGroupApp.SystemControllerGroup.RoleController

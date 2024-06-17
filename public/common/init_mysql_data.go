@@ -3,6 +3,8 @@ package common
 import (
 	"errors"
 
+	"github.com/brianvoe/gofakeit/v7"
+
 	"github.com/eryajf/xirang/config"
 	"github.com/eryajf/xirang/model/system"
 	"github.com/eryajf/xirang/public/tools"
@@ -214,7 +216,7 @@ func InitData() {
 		{
 			Model:         gorm.Model{ID: 1},
 			Username:      "admin",
-			Password:      tools.NewGenPasswd("admin123456"),
+			Password:      tools.NewGenPasswd("admin123"),
 			Nickname:      "管理员",
 			GivenName:     "最强后台",
 			Mail:          "admin@eryajf.net",
@@ -616,39 +618,107 @@ func InitData() {
 	}
 
 	// 6.写入分组
-	newGroups := make([]system.Group, 0)
-	groups := []system.Group{
+	newGroups := make([]system.Dept, 0)
+	groups := []system.Dept{
 		{
-			Model:     gorm.Model{ID: 1},
-			GroupName: "root",
-			Remark:    "根部门",
-			Creator:   "system",
+			Name:      "杭州总公司",
 			ParentId:  0,
-			Source:    "system",
+			Sort:      0,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    1, // 状态 1 启用 0 停用
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
 		},
 		{
-			Model:     gorm.Model{ID: 2},
-			GroupName: "backend",
-			Remark:    "后端部",
-			Creator:   "system",
-			ParentId:  1,
-			Source:    "system",
+			Name:      "郑州分公司",
+			ParentId:  100,
+			Sort:      1,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    1,
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
 		},
 		{
-			Model:     gorm.Model{ID: 3},
-			GroupName: "test",
-			Remark:    "测试部",
-			Creator:   "system",
-			ParentId:  1,
-			Source:    "system",
+			Name:      "研发部门",
+			ParentId:  101,
+			Sort:      1,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    1,
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
 		},
 		{
-			Model:     gorm.Model{ID: 4},
-			GroupName: "ops",
-			Remark:    "运维部",
-			Creator:   "system",
-			ParentId:  1,
-			Source:    "system",
+			Name:      "市场部门",
+			ParentId:  102,
+			Sort:      1,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    1,
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
+		},
+		{
+			Name:      "深圳分公司",
+			ParentId:  100,
+			Sort:      2,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    1,
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
+		},
+		{
+			Name:      "市场部门",
+			ParentId:  101,
+			Sort:      2,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    1,
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
+		},
+		{
+			Name:      "财务部门",
+			ParentId:  102,
+			Sort:      2,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    1,
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
+		},
+		{
+			Name:      "测试部门",
+			ParentId:  101,
+			Sort:      3,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    0,
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
+		},
+		{
+			Name:      "财务部门",
+			ParentId:  101,
+			Sort:      4,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    1,
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
+		},
+		{
+			Name:      "运维部门",
+			ParentId:  101,
+			Sort:      5,
+			Phone:     "15888888888",
+			Principal: gofakeit.Name(),
+			Email:     gofakeit.Email(),
+			Status:    0,
+			Remark:    "这里是备注信息这里是备注信息这里是备注信息这里是备注信息",
 		},
 	}
 

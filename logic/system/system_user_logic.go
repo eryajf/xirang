@@ -106,12 +106,12 @@ func (l UserLogic) Add(c *gin.Context, req interface{}) (data interface{}, rspEr
 	}
 
 	// 获取用户将要添加的分组
-	groups, err := groupService.GetGroupByIds(tools.StringToSlice(user.DepartmentId, ","))
+	depts, err := deptService.GetDeptByIds(tools.StringToSlice(user.DepartmentId, ","))
 	if err != nil {
 		return nil, tools.NewMySqlError(fmt.Errorf("根据部门ID获取部门信息失败" + err.Error()))
 	}
 
-	err = CommonAddUser(&user, groups)
+	err = CommonAddUser(&user, depts)
 	if err != nil {
 		return nil, tools.NewOperationError(fmt.Errorf("添加用户失败" + err.Error()))
 	}
@@ -387,10 +387,10 @@ func (l UserLogic) GetUserInfo(c *gin.Context, req interface{}) (data interface{
 
 // ============ user logic ============
 
-// CommonAddGroup 标准创建分组
-func CommonAddGroup(group *system.Group) error {
+// CommonAddDept 标准创建分组
+func CommonAddDept(dept *system.Dept) error {
 	// 在数据库中创建组
-	err := groupService.Add(group)
+	err := deptService.Add(dept)
 	if err != nil {
 		return err
 	}
@@ -402,7 +402,7 @@ func CommonAddGroup(group *system.Group) error {
 		return err
 	}
 
-	err = groupService.AddUserToGroup(group, []system.User{*adminInfo})
+	err = deptService.AddUserToDept(dept, []system.User{*adminInfo})
 	if err != nil {
 		return err
 	}
@@ -410,9 +410,9 @@ func CommonAddGroup(group *system.Group) error {
 	return nil
 }
 
-// CommonUpdateGroup 标准更新分组
-func CommonUpdateGroup(oldGroup, newGroup *system.Group) error {
-	err := groupService.Update(newGroup)
+// CommonUpdateDept 标准更新分组
+func CommonUpdateDept(oldDept, newDept *system.Dept) error {
+	err := deptService.Update(newDept)
 	if err != nil {
 		return err
 	}
@@ -420,7 +420,7 @@ func CommonUpdateGroup(oldGroup, newGroup *system.Group) error {
 }
 
 // CommonAddUser 标准创建用户
-func CommonAddUser(user *system.User, groups []*system.Group) error {
+func CommonAddUser(user *system.User, depts []*system.Dept) error {
 	// 用户信息的预置处理
 	if user.Nickname == "" {
 		user.Nickname = "佚名"
@@ -457,9 +457,9 @@ func CommonAddUser(user *system.User, groups []*system.Group) error {
 	}
 
 	// 处理用户归属的组
-	for _, group := range groups {
+	for _, dept := range depts {
 		// 先将用户和部门信息维护到MySQL
-		err := groupService.AddUserToGroup(group, []system.User{*user})
+		err := deptService.AddUserToDept(dept, []system.User{*user})
 		if err != nil {
 			return tools.NewMySqlError(fmt.Errorf("向MySQL添加用户到分组关系失败：" + err.Error()))
 		}
@@ -468,7 +468,7 @@ func CommonAddUser(user *system.User, groups []*system.Group) error {
 }
 
 // CommonUpdateUser 标准更新用户
-func CommonUpdateUser(oldUser, newUser *system.User, groupId []uint) error {
+func CommonUpdateUser(oldUser, newUser *system.User, deptId []uint) error {
 	err := userService.Update(newUser)
 	if err != nil {
 		return tools.NewMySqlError(fmt.Errorf("在MySQL更新用户失败：" + err.Error()))
@@ -476,28 +476,28 @@ func CommonUpdateUser(oldUser, newUser *system.User, groupId []uint) error {
 
 	//判断部门信息是否有变化有变化则更新相应的数据库
 	oldDeptIds := tools.StringToSlice(oldUser.DepartmentId, ",")
-	addDeptIds, removeDeptIds := tools.ArrUintCmp(oldDeptIds, groupId)
+	addDeptIds, removeDeptIds := tools.ArrUintCmp(oldDeptIds, deptId)
 
 	// 先处理添加的部门
-	addgroups, err := groupService.GetGroupByIds(addDeptIds)
+	adddepts, err := deptService.GetDeptByIds(addDeptIds)
 	if err != nil {
 		return tools.NewMySqlError(fmt.Errorf("根据部门ID获取部门信息失败" + err.Error()))
 	}
-	for _, group := range addgroups {
+	for _, dept := range adddepts {
 		// 先将用户和部门信息维护到MySQL
-		err := groupService.AddUserToGroup(group, []system.User{*newUser})
+		err := deptService.AddUserToDept(dept, []system.User{*newUser})
 		if err != nil {
 			return tools.NewMySqlError(fmt.Errorf("向MySQL添加用户到分组关系失败：" + err.Error()))
 		}
 	}
 
 	// 再处理删除的部门
-	removegroups, err := groupService.GetGroupByIds(removeDeptIds)
+	removedepts, err := deptService.GetDeptByIds(removeDeptIds)
 	if err != nil {
 		return tools.NewMySqlError(fmt.Errorf("根据部门ID获取部门信息失败" + err.Error()))
 	}
-	for _, group := range removegroups {
-		err := groupService.RemoveUserFromGroup(group, []system.User{*newUser})
+	for _, dept := range removedepts {
+		err := deptService.RemoveUserFromDept(dept, []system.User{*newUser})
 		if err != nil {
 			return tools.NewMySqlError(fmt.Errorf("在MySQL将用户从分组移除失败：" + err.Error()))
 		}

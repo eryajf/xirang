@@ -31,7 +31,7 @@ func dbAutoMigrate() {
 	_ = DB.AutoMigrate(
 		&system.User{},
 		&system.Role{},
-		&system.Group{},
+		&system.Dept{},
 		&system.Menu{},
 		&system.Api{},
 		&system.OperationLog{},

@@ -2,7 +2,7 @@ package system
 
 type ServiceGroup struct {
 	ApiService
-	GroupService
+	DeptService
 	MenuService
 	OperationLogService
 	RoleService

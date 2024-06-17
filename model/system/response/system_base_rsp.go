@@ -10,9 +10,17 @@ type DashboardList struct {
 
 // UserLoginRsp 用户登录响应
 type UserLoginRsp struct {
-	Username    string   `json:"username"`
-	Nickname    string   `json:"nickname"`
-	AccessToken string   `json:"accessToken"`
-	Expires     string   `json:"expires"`
-	Roles       []string `json:"roles"`
+	Username     string   `json:"username"`
+	Nickname     string   `json:"nickname"`
+	AccessToken  string   `json:"accessToken"`
+	RefreshToken string   `json:"refreshToken"`
+	Expires      string   `json:"expires"`
+	Roles        []string `json:"roles"`
+}
+
+// UserRefreshTokenRsp 用户刷新token响应
+type UserRefreshTokenRsp struct {
+	AccessToken  string `json:"accessToken"`
+	RefreshToken string `json:"refreshToken"`
+	Expires      string `json:"expires"`
 }
